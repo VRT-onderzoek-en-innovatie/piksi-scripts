@@ -149,7 +149,7 @@ while(<>) {
 	my $crc_msg = unpack "S<", substr($msg, 6+$length, 2);
 	my $crc = Digest::CRC->new(width=>16, init=>0x0000, xorout=>0x0000,
 	                           refout=>0, poly=>0x1021, refin=>0, cont=>0);
-	# Countrary to the documentation, the preamble is NOT included in the CRC
+	# preamble starts after preamble, and ends just before the CRC field
 	$crc->add(substr($msg, 1, 5+$length));
 	my $crc_calc = $crc->digest;
 	if( $crc_msg != $crc_calc ) {
